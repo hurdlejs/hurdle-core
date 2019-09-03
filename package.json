@@ -1,0 +1,29 @@
+{
+  "name": "hurdle-core",
+  "version": "1.0.0",
+  "description": "Core library for hurdle",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hurdlejs/hurdle-core.git"
+  },
+  "keywords": [
+    "test",
+    "core",
+    "framework",
+    "e2e"
+  ],
+  "author": "peanut jdelf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hurdlejs/hurdle-core/issues"
+  },
+  "homepage": "https://github.com/hurdlejs/hurdle-core#readme",
+  "devDependencies": {
+    "typescript": "^3.6.2"
+  }
+}
