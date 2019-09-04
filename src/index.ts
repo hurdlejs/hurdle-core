@@ -1,5 +1,5 @@
 export default class Hello {
-  world: Array<string>;
+  world: string = '';
 
   help(): void {
     const world = 'blue';
