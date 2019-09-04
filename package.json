@@ -13,6 +13,9 @@
     "type": "git",
     "url": "git+https://github.com/hurdlejs/hurdle-core.git"
   },
+  "engines": {
+    "node": ">=12.9.1"
+  },
   "keywords": [
     "test",
     "core",
