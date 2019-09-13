@@ -37,7 +37,7 @@ export class Configuration {
     return Configuration.instance;
   }
 
-  public setProjectConfigurationPath(configurationPath: string) {
+  public setProjectConfigurationPath(configurationPath: string): void {
     this.defaultConfiguration.projectConfigurationPath = configurationPath;
     this.refreshConfiguration();
   }
@@ -46,7 +46,7 @@ export class Configuration {
     throw "Not implemented";
   }
 
-  public setConfiguration(property: string, value: any, target: ConfigurationTarget) {
+  public setConfiguration(property: string, value: any, target: ConfigurationTarget): void {
     throw "Not implemented";
   }
 
