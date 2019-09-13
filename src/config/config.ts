@@ -26,7 +26,7 @@ export class Configuration {
 
 
   private constructor() {
-    this.createPaths([this.defaultConfiguration.extensionPath, this.defaultConfiguration.profileConfigurationPath]);
+    this.createPaths(this.defaultConfiguration.extensionPath, this.defaultConfiguration.profileConfigurationPath);
     this.refreshConfiguration();
   }
 
@@ -79,7 +79,7 @@ export class Configuration {
     return mergeObjects(configurationOptions);
   }
 
-  private createPaths(paths: Array<string>) {
+  private createPaths(...paths: string[]) {
     for (let configurationPath of paths) {
       if (!fs.existsSync(configurationPath)) {
         if (path.extname(configurationPath) !== '') {
