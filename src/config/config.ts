@@ -37,20 +37,20 @@ export class Configuration {
     return Configuration.instance;
   }
 
-  public setProjectConfigurationPath(configurationPath: string) {
+  public setProjectConfigurationPath(configurationPath: string): void {
     this.defaultConfiguration.projectConfigurationPath = configurationPath;
     this.refreshConfiguration();
   }
 
-  public getConfiguration(property: string, target?: ConfigurationTarget) : any {
+  public getConfiguration(property: string, target?: ConfigurationTarget): any {
 
   }
 
-  public setConfiguration(property: string, value: any, target: ConfigurationTarget) {
+  public setConfiguration(property: string, value: any, target: ConfigurationTarget): void {
     
   }
 
-  public getConfigurationOptions(target?: ConfigurationTarget) : ConfigurationOptions {
+  public getConfigurationOptions(target?: ConfigurationTarget): ConfigurationOptions {
     return this.configuration;
   }
 
@@ -67,7 +67,7 @@ export class Configuration {
    * Load configuration file and parse JSON to object.
    * @param path Path of hurdle configuration.json file
    */
-  private loadConfigurationFromFile(configurationPath: string) : ConfigurationOptions {
+  private loadConfigurationFromFile(configurationPath: string): ConfigurationOptions {
     if (fs.existsSync(configurationPath)) {
       return parse(fs.readFileSync(configurationPath, 'utf8'));
     }
@@ -75,11 +75,11 @@ export class Configuration {
     return this.defaultConfiguration;
   }
 
-  private mergeConfigurationOptions(...configurationOptions: ConfigurationOptions[]) : ConfigurationOptions {
+  private mergeConfigurationOptions(...configurationOptions: ConfigurationOptions[]): ConfigurationOptions {
     return mergeObjects(configurationOptions);
   }
 
-  private createPaths(...paths: string[]) {
+  private createPaths(...paths: string[]): void {
     for (const configurationPath of paths) {
       if (!fs.existsSync(configurationPath)) {
         if (path.extname(configurationPath) !== '') {
