@@ -6,14 +6,14 @@ import { ExtensionType } from './extension-types';
  * @param name Name of the extension, should match npm package name or local directory name
  * @param extensionType TODO Type of extension. Not sure if this is required
  */
-export async function loadExtension(name: string, extensionType: ExtensionType) {
+export async function loadExtension(name: string, extensionType: ExtensionType): Promise<void> {
   // TODO Move to config class and allow user overrides
   const defaultExtensionPath = '../extensions';
 
-  let extensionPath = path.join(defaultExtensionPath, name);
-  let extensionJsonPackagePath = path.join(extensionPath, 'package.json');
+  const extensionPath = path.join(defaultExtensionPath, name);
+  const extensionJsonPackagePath = path.join(extensionPath, 'package.json');
   // TODO Read package.json and get package details
-  let extension = await import(extensionPath);
+  const extension = await import(extensionPath);
 }
 
 /**
@@ -21,11 +21,11 @@ export async function loadExtension(name: string, extensionType: ExtensionType) 
  * @param name Name of the extension, must match npm package name
  * @param extensionType TODO Type of extension. Not sure if this is required
  */
-export async function installExtension(name: string, extensionType: ExtensionType) {
+export function installExtension(name: string, extensionType: ExtensionType): void {
   // TODO Move to config class and allow user overrides
   const defaultExtensionPath = '../extensions';
 
-  let extensionPath = path.join(defaultExtensionPath, name);
+  const extensionPath = path.join(defaultExtensionPath, name);
 
 }
 

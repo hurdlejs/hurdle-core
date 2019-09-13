@@ -42,24 +42,24 @@ export class Configuration {
     this.refreshConfiguration();
   }
 
-  public getConfiguration(property: string, target?: ConfigurationTarget) : any {
-
+  public getConfiguration(property: string, target?: ConfigurationTarget): any {
+    throw "Not implemented";
   }
 
   public setConfiguration(property: string, value: any, target: ConfigurationTarget) {
-    
+    throw "Not implemented";
   }
 
-  public getConfigurationOptions(target?: ConfigurationTarget) : ConfigurationOptions {
+  public getConfigurationOptions(target?: ConfigurationTarget): ConfigurationOptions {
     return this.configuration;
   }
 
   /**
    * Load all configuration files and merge
    */
-  private refreshConfiguration() {
-    let profileConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.profileConfigurationPath);
-    let projectConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.projectConfigurationPath);
+  private refreshConfiguration(): void {
+    const profileConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.profileConfigurationPath);
+    const projectConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.projectConfigurationPath);
     this.configuration = this.mergeConfigurationOptions(this.defaultConfiguration, profileConfiguration, projectConfiguration);
   }
 
@@ -67,7 +67,7 @@ export class Configuration {
    * Load configuration file and parse JSON to object.
    * @param path Path of hurdle configuration.json file
    */
-  private loadConfigurationFromFile(configurationPath: string) : ConfigurationOptions {
+  private loadConfigurationFromFile(configurationPath: string): ConfigurationOptions {
     if (fs.existsSync(configurationPath)) {
       return parse(fs.readFileSync(configurationPath, 'utf8'));
     }
@@ -75,12 +75,12 @@ export class Configuration {
     return this.defaultConfiguration;
   }
 
-  private mergeConfigurationOptions(...configurationOptions: ConfigurationOptions[]) : ConfigurationOptions {
+  private mergeConfigurationOptions(...configurationOptions: ConfigurationOptions[]): ConfigurationOptions {
     return mergeObjects(configurationOptions);
   }
 
-  private createPaths(...paths: string[]) {
-    for (let configurationPath of paths) {
+  private createPaths(...paths: string[]): void {
+    for (const configurationPath of paths) {
       if (!fs.existsSync(configurationPath)) {
         if (path.extname(configurationPath) !== '') {
           fs.writeFileSync(configurationPath, '');

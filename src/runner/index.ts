@@ -5,8 +5,8 @@ export class Runner {
   constructor(private projectConfigurationPath?: string) {
   }
 
-  public start() {
-    let configuration = Configuration.getInstance();
+  public start(): void {
+    const configuration = Configuration.getInstance();
     if (this.projectConfigurationPath)
       configuration.setProjectConfigurationPath(this.projectConfigurationPath);
 

@@ -1,7 +1,7 @@
 import { Runner } from './runner/index';
 
 export default class Hello {
-  world: string = '';
+  world = '';
 
   help(): void {
     const world = 'blue';
@@ -10,5 +10,5 @@ export default class Hello {
 }
 
 
-let runner = new Runner();
+const runner = new Runner();
 runner.start();
