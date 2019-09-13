@@ -58,8 +58,8 @@ export class Configuration {
    * Load all configuration files and merge
    */
   private refreshConfiguration() {
-    let profileConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.profileConfigurationPath);
-    let projectConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.projectConfigurationPath);
+    const profileConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.profileConfigurationPath);
+    const projectConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.projectConfigurationPath);
     this.configuration = this.mergeConfigurationOptions(this.defaultConfiguration, profileConfiguration, projectConfiguration);
   }
 
@@ -80,7 +80,7 @@ export class Configuration {
   }
 
   private createPaths(...paths: string[]) {
-    for (let configurationPath of paths) {
+    for (const configurationPath of paths) {
       if (!fs.existsSync(configurationPath)) {
         if (path.extname(configurationPath) !== '') {
           fs.writeFileSync(configurationPath, '');
