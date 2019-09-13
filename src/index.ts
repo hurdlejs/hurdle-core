@@ -1,3 +1,5 @@
+import { Runner } from './runner/index';
+
 export default class Hello {
   world: string = '';
 
@@ -6,3 +8,7 @@ export default class Hello {
     this.world = world;
   }
 }
+
+
+let runner = new Runner();
+runner.start();
