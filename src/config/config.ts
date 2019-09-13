@@ -60,7 +60,7 @@ export class Configuration {
   private refreshConfiguration() {
     let profileConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.profileConfigurationPath);
     let projectConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.projectConfigurationPath);
-    this.configuration = this.mergeConfigurationOptions([this.defaultConfiguration, profileConfiguration, projectConfiguration]);
+    this.configuration = this.mergeConfigurationOptions(this.defaultConfiguration, profileConfiguration, projectConfiguration);
   }
 
   /**
@@ -75,7 +75,7 @@ export class Configuration {
     return this.defaultConfiguration;
   }
 
-  private mergeConfigurationOptions(configurationOptions: Array<ConfigurationOptions>) : ConfigurationOptions {
+  private mergeConfigurationOptions(...configurationOptions: ConfigurationOptions[]) : ConfigurationOptions {
     return mergeObjects(configurationOptions);
   }
 
