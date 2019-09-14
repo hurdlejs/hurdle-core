@@ -9,7 +9,7 @@ export enum ConfigurationTarget {
   Profile
 }
 
-export interface ConfigurationOptions {
+export interface ConfigurationPaths {
   extensionPath: string;
   profileConfigurationPath: string;
   projectConfigurationPath: string;
@@ -17,16 +17,16 @@ export interface ConfigurationOptions {
 
 export class Configuration {
   private static instance: Configuration;
-  private defaultConfiguration: ConfigurationOptions = {
+  private defaultConfigurationPaths: ConfigurationPaths = {
     extensionPath: path.join(os.homedir(), '.hurdle', 'extensions'),
     profileConfigurationPath: path.join(os.homedir(), '.hurdle', 'configuration.json'),
     projectConfigurationPath: path.join('.hurdle', 'configuration.json')
   };
-  private configuration: ConfigurationOptions = this.defaultConfiguration;
+  private configuration: ConfigurationPaths = this.defaultConfigurationPaths;
 
 
   private constructor() {
-    this.createPaths(this.defaultConfiguration.extensionPath, this.defaultConfiguration.profileConfigurationPath);
+    this.createPaths(this.defaultConfigurationPaths.extensionPath, this.defaultConfigurationPaths.profileConfigurationPath);
     this.refreshConfiguration();
   }
 
@@ -38,7 +38,7 @@ export class Configuration {
   }
 
   public setProjectConfigurationPath(configurationPath: string): void {
-    this.defaultConfiguration.projectConfigurationPath = configurationPath;
+    this.defaultConfigurationPaths.projectConfigurationPath = configurationPath;
     this.refreshConfiguration();
   }
 
@@ -50,32 +50,36 @@ export class Configuration {
     throw "Not implemented";
   }
 
-  public getConfigurationOptions(target?: ConfigurationTarget): ConfigurationOptions {
+  public getConfigurationOptions(target?: ConfigurationTarget): ConfigurationPaths {
     return this.configuration;
+  }
+
+  public getExtensionPath(): string {
+    return this.defaultConfigurationPaths.extensionPath;
   }
 
   /**
    * Load all configuration files and merge
    */
   private refreshConfiguration(): void {
-    const profileConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.profileConfigurationPath);
-    const projectConfiguration = this.loadConfigurationFromFile(this.defaultConfiguration.projectConfigurationPath);
-    this.configuration = this.mergeConfigurationOptions(this.defaultConfiguration, profileConfiguration, projectConfiguration);
+    const profileConfiguration = this.loadConfigurationFromFile(this.defaultConfigurationPaths.profileConfigurationPath);
+    const projectConfiguration = this.loadConfigurationFromFile(this.defaultConfigurationPaths.projectConfigurationPath);
+    this.configuration = this.mergeConfigurationOptions(this.defaultConfigurationPaths, profileConfiguration, projectConfiguration);
   }
 
   /**
    * Load configuration file and parse JSON to object.
    * @param path Path of hurdle configuration.json file
    */
-  private loadConfigurationFromFile(configurationPath: string): ConfigurationOptions {
+  private loadConfigurationFromFile(configurationPath: string): ConfigurationPaths {
     if (fs.existsSync(configurationPath)) {
       return parse(fs.readFileSync(configurationPath, 'utf8'));
     }
 
-    return this.defaultConfiguration;
+    return this.defaultConfigurationPaths;
   }
 
-  private mergeConfigurationOptions(...configurationOptions: ConfigurationOptions[]): ConfigurationOptions {
+  private mergeConfigurationOptions(...configurationOptions: ConfigurationPaths[]): ConfigurationPaths {
     return mergeObjects(configurationOptions);
   }
 
