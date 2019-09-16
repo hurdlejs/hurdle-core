@@ -21,9 +21,6 @@ export class TestSection {
   /**
    * Name of the test section
    */
-  /**
-   * Name of the test section
-   */
   public name: string | undefined;
   /**
    * Description of the test section
