@@ -4,6 +4,10 @@ import { RunnerState } from '../runner/state';
  */
 export interface HurdleAction {
   /**
+   * Unique name of the action
+   */
+  name: string;
+  /**
    * Action properties
    */
   properties: object;

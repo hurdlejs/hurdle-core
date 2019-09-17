@@ -2,9 +2,13 @@ import { HurdleAction } from '../action/action';
 
 
 /**
- * Defines a project loader/saver interface
+ * Defines a project type interface
  */
 export interface HurdleProject {
+  /**
+   * Unique name of the project type
+   */
+  name: string;
   /**
    * Load a project source and transform into a project configuration object
    */
