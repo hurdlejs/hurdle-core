@@ -1,6 +1,9 @@
 import * as path from 'path';
 import * as fs from 'graceful-fs';
 import { Configuration } from '../config/config';
+import { HurdleAction } from '../action/action';
+import { HurdleReporter } from '../reporter/reporter';
+import { HurdleProject } from '../project/project';
 
 /**
  * Extension interface
@@ -9,15 +12,15 @@ export interface HurdleExtension {
   /**
    * Test case action class export 
    */
-  action?: object;
+  action?: HurdleAction;
   /**
-   * Project loader class export 
+   * Project class export 
    */
-  loader?: object;
+  project?: HurdleProject;
   /**
    * Reporter class export
    */
-  reporter?: object;
+  reporter?: HurdleReporter;
 }
 
 /**

@@ -1,4 +1,21 @@
-import { HurdleAction } from '../action/action'
+import { HurdleAction } from '../action/action';
+
+
+/**
+ * Defines a project loader/saver interface
+ */
+export interface HurdleProject {
+  /**
+   * Load a project source and transform into a project configuration object
+   */
+  load: (source: string | object) => ProjectConfiguration;
+
+  /**
+   * Save a project configuration object to destination
+   */
+  save: (destination: string | object, projectConfiguration: ProjectConfiguration) => boolean;
+}
+
 
 export class ProjectConfiguration {
   /**
