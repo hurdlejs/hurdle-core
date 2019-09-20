@@ -10,7 +10,7 @@ export enum ConfigurationTarget {
 }
 
 export interface ConfigurationPaths {
-  extensionPath: string;
+  extensionDirectory: string;
   profileConfigurationPath: string;
   projectConfigurationPath: string;
 }
@@ -18,7 +18,7 @@ export interface ConfigurationPaths {
 export class Configuration {
   private static instance: Configuration;
   private defaultConfigurationPaths: ConfigurationPaths = {
-    extensionPath: path.join(os.homedir(), '.hurdle', 'extensions'),
+    extensionDirectory: path.join(os.homedir(), '.hurdle', 'extensions'),
     profileConfigurationPath: path.join(os.homedir(), '.hurdle', 'configuration.json'),
     projectConfigurationPath: path.join('.hurdle', 'configuration.json')
   };
@@ -26,7 +26,7 @@ export class Configuration {
 
 
   private constructor() {
-    this.createPaths(this.defaultConfigurationPaths.extensionPath, this.defaultConfigurationPaths.profileConfigurationPath);
+    this.createPaths(this.defaultConfigurationPaths.extensionDirectory, this.defaultConfigurationPaths.profileConfigurationPath);
     this.refreshConfiguration();
   }
 
@@ -54,8 +54,8 @@ export class Configuration {
     return this.configuration;
   }
 
-  public getExtensionPath(): string {
-    return this.defaultConfigurationPaths.extensionPath;
+  public getExtensionDirectory(): string {
+    return this.defaultConfigurationPaths.extensionDirectory;
   }
 
   /**

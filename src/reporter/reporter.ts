@@ -1,20 +1,20 @@
 /**
  * Defines a test report interface
  */
-export interface HurdleReporter {
+export abstract class HurdleReporter {
   /**
-   * Unique name of the reporter
+   * Unique identifier of the reporter
    */
-  name: string;
-  activate?: void;
-  projectStart?: void;
-  suiteStart?: void;
-  testStart?: void;
-  testPass?: void;
-  testFail?: void;
-  testSkip?: void;
-  testEnd?: void;
-  suiteEnd?: void;
-  projectEnd?: void;
-  deactivate?: void;
+  static id: string;
+  abstract activate?: void;
+  abstract projectStart?: void;
+  abstract suiteStart?: void;
+  abstract testStart?: void;
+  abstract testPass?: void;
+  abstract testFail?: void;
+  abstract testSkip?: void;
+  abstract testEnd?: void;
+  abstract suiteEnd?: void;
+  abstract projectEnd?: void;
+  abstract deactivate?: void;
 }

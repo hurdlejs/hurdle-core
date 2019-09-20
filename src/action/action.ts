@@ -2,21 +2,22 @@ import { RunnerState } from '../runner/state';
 /**
  * Defines a test case action interface
  */
-export interface HurdleAction {
+export abstract class HurdleAction {
   /**
-   * Unique name of the action
+   * Unique identifier of the action
    */
-  name: string;
+  static id: string;
   /**
    * Action properties
    */
-  properties: object;
-  execute: (state: RunnerState) => object;
-  initialise: (state: RunnerState) => boolean;
-  finalise: (state: RunnerState) => boolean;
+  abstract properties: object;
+  abstract execute: (state: RunnerState) => object;
+  abstract initialise: (state: RunnerState) => boolean;
+  abstract finalise: (state: RunnerState) => boolean;
 
   /**
+   * TODO move to package.json or config file?
    * Describe object returned from execute function, required for assertions 
    */
-  returnSchema: object;
+  abstract returnSchema: object;
 }
