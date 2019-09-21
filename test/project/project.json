@@ -1,0 +1,47 @@
+{
+  "projectFiles": [
+    "project-1.json"
+  ],
+  "global": [],
+  "sections": [
+    {
+      "name": "Test Section 1",
+      "description": "Test section 1 description",
+      "cases": [
+        {
+          "id": "TS1-TC1",
+          "name": "Test case 1",
+          "skip": false,
+          "steps": [
+            {
+              "action": {
+                "id": "http",
+                "properties": {
+                  "method": "GET",
+                  "url": "https://my-json-server.typicode.com/typicode/demo/posts"
+                }
+              },
+              "check": [
+                { 
+                  "temp": "response.data[0].title == 'Post 1'"
+                },
+                {
+                  "temp": "response.status == 200"
+                }
+              ]
+            },
+            {
+              "action": {
+                "id": "variable",
+                "properties": {
+                  "name": "postId",
+                  "value": "response.data[1].title"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
