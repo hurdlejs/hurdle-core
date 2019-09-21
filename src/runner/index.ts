@@ -18,7 +18,7 @@ export class Runner {
     if (extension !== undefined) {
       const projectLoader =  new extension.instanceType() as HurdleProject;
       // Project path/file should be provided by cli or UI, hardcoded for testing
-      const projectConfiguration = projectLoader.load('../project.json');
+      const projectConfiguration = projectLoader.load('test/project/project.json');
       console.log(projectConfiguration);
     }
   } 
