@@ -10,14 +10,19 @@ export abstract class HurdleAction {
   /**
    * Action properties
    */
-  abstract properties: object;
+  properties: object | undefined;
+  
   abstract execute: (state: RunnerState) => object;
-  abstract initialise: (state: RunnerState) => boolean;
-  abstract finalise: (state: RunnerState) => boolean;
+
+  /**
+   * Not sure if methods below are required
+   */
+  //initialise: ((state: RunnerState) => boolean) | undefined;
+  //finalise: ((state: RunnerState) => boolean) | undefined;
 
   /**
    * TODO move to package.json or config file?
    * Describe object returned from execute function, required for assertions 
    */
-  abstract returnSchema: object;
+  //abstract returnSchema: object;
 }
