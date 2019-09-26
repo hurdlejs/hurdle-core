@@ -10,7 +10,7 @@ export abstract class HurdleAction {
   /**
    * Action properties
    */
-  properties: object | undefined;
+  properties: any;
   
   abstract execute: (state: RunnerState) => object;
 

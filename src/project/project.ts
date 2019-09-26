@@ -80,13 +80,27 @@ export class TestCase {
 
 export class TestStep {
   /**
-   * Action to perform 
+   * Action to perform
    */
-  public action: HurdleAction | undefined;
+  public action!: TestAction;
   /**
    * List of checks made on the return object of an action 
    */
   public check: Array<HurdleCheck> = [];
+}
+
+/**
+ * Defines a test case action interface
+ */
+export class TestAction {
+  /**
+   * Unique identifier of the action
+   */
+  id!: string;
+  /**
+   * Action properties
+   */
+  properties: any;
 }
 
 /**
