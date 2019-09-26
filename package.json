@@ -72,6 +72,7 @@
     "got": "^9.6.0",
     "graceful-fs": "^4.2.2",
     "json-merger": "^1.1.1",
-    "jsonc-parser": "^2.1.1"
+    "jsonc-parser": "^2.1.1",
+    "neat-csv": "^5.1.0"
   }
 }
