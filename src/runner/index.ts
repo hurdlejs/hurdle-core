@@ -1,8 +1,9 @@
 import { Configuration } from '../config/config';
 import { Extension, ExtensionType } from '../extension/extension';
-import { HurdleProject, ProjectConfiguration, TestSection, TestCase, TestStep, HurdleCheck } from '../project/project';
+import { HurdleProject, ProjectConfiguration, TestSection, TestCase, TestStep, TestAssertion } from '../project/project';
 import { HurdleAction } from '../action/action';
 import { RunnerState } from './state';
+import { HurdleAssertion } from '../assertion/assertion';
 
 export class Runner {
 
@@ -52,7 +53,7 @@ export class Runner {
     }
   }
     
-  public async runTestStep(testStep: TestStep, runnerState: RunnerState): Promise<void> {
+  public async runTestStep(testStep: TestStep, runnerState: any): Promise<void> {
     const extensions = await Extension.getInstance();
     const extension = extensions.getExtension(testStep.action.id, ExtensionType.Action);
     if (extension) {
@@ -70,7 +71,16 @@ export class Runner {
 
   }
 
-  public async runTestCheck(testCheck: HurdleCheck, runnerState: RunnerState): Promise<void> {
-    await Promise.resolve(console.log('TODO'));
+  public async runTestCheck(testCheck: TestAssertion, runnerState: RunnerState): Promise<void> {
+    const extensions = await Extension.getInstance();
+    const extension = extensions.getExtension(testCheck.id, ExtensionType.Assertion);
+    if (extension !== undefined) {
+      const assertion =  new extension.instanceType() as HurdleAssertion;
+      assertion.properties = testCheck.properties;
+      const result = await assertion.assert(runnerState);
+      console.log(result);
+    } else {
+      console.log(`Test check ${testCheck.id} not found`);
+    }
   }
 }

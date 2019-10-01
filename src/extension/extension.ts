@@ -4,6 +4,7 @@ import { Configuration } from '../config/config';
 import { HurdleAction } from '../action/action';
 import { HurdleReporter } from '../reporter/reporter';
 import { HurdleProject } from '../project/project';
+import { HurdleAssertion } from '../assertion/assertion';
 
 /**
  * Extension interface
@@ -21,6 +22,10 @@ export interface HurdleExtension {
    * Reporter class export
    */
   reporter?: Array<typeof HurdleReporter>;
+    /**
+   * Assertion class export
+   */
+  assertion?: Array<typeof HurdleAssertion>;
 }
 
 /**
@@ -38,11 +43,15 @@ export enum ExtensionType {
   /**
    * Test result reporter
    */
-  Reporter
+  Reporter,
+  /**
+   * Test assertion
+   */
+  Assertion
 }
 
 export class RegisteredExtension {
-  public constructor(public id: string, public instanceType: typeof HurdleAction | typeof HurdleProject | typeof HurdleReporter, public type: ExtensionType, public packageJson: object) {
+  public constructor(public id: string, public instanceType: typeof HurdleAction | typeof HurdleProject | typeof HurdleReporter | typeof HurdleAssertion, public type: ExtensionType, public packageJson: object) {
 
   }
 }
@@ -139,6 +148,11 @@ export class Extension {
       for (const extensionExport of extensionExports.reporter)
        this.registerExtension(extensionExport.id, extensionExport, ExtensionType.Reporter, packageJson);
     }
+    // Extension package contains an assertion
+    if (extensionExports.assertion && extensionExports.assertion.length > 0) {
+      for (const extensionExport of extensionExports.assertion)
+        this.registerExtension(extensionExport.id, extensionExport, ExtensionType.Assertion, packageJson);
+    }
   }
 
    /**
@@ -148,7 +162,7 @@ export class Extension {
    * @param type Type of extension
    * @param packageJson Package.json object
    */
-  public registerExtension(id: string, instanceType: typeof HurdleAction | typeof HurdleProject | typeof HurdleReporter, type: ExtensionType, packageJson: object): void {
+  public registerExtension(id: string, instanceType: typeof HurdleAction | typeof HurdleProject | typeof HurdleReporter | typeof HurdleAssertion, type: ExtensionType, packageJson: object): void {
     if (this.extensions.some(extension => extension.id === id)) {
       // Duplicate extension name 
       // TODO Return error message

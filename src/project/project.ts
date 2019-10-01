@@ -86,7 +86,7 @@ export class TestStep {
   /**
    * List of checks made on the return object of an action 
    */
-  public check: Array<HurdleCheck> = [];
+  public check: Array<TestAssertion> = [];
 }
 
 /**
@@ -104,11 +104,17 @@ export class TestAction {
 }
 
 /**
- * Check against action returnSchema.
- * TODO Handle assertions and move class into seperate file
+ * Check against runner state.
  */
-export class HurdleCheck {
-
+export class TestAssertion {
+  /**
+   * Unique identifier of the assertion type
+   */
+  id!: string;  
+  /**
+   * Assertion properties
+   */
+  properties: any;
 }
 
 export enum TestCasePriority {
