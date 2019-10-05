@@ -11,6 +11,7 @@ export class JavaScriptAssertion implements HurdleAssertion {
     js: ''
   };
 
+  /* eslint @typescript-eslint/require-await: 0 */
   async assert(state: RunnerState): Promise<HurdleAssertionResult> {
     try {
       const success = vm.runInNewContext(this.properties.js, state);

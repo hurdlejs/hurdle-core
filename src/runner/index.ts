@@ -95,6 +95,7 @@ export class Runner {
       action.properties = testStep.action.properties;
       // Wait for sync actions
       const response = await Promise.resolve(action.execute(runnerState));
+      /* eslint require-atomic-updates: 0 */
       runnerState[testStep.action.id] = response;
       for (const testCheck of testStep.check) {
         await this.runTestCheck(testStep, testCheck, runnerState, reporters);

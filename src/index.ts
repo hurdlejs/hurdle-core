@@ -9,6 +9,11 @@ export default class Hello {
   }
 }
 
+function error(error): void {
+  console.error(error);
+}
 
 const runner = new Runner();
-runner.start();
+runner.start().catch(error);
+
+
