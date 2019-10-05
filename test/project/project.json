@@ -10,7 +10,7 @@
       "cases": [
         {
           "id": "TS1-TC1",
-          "name": "Test case 1",
+          "name": "Check posts",
           "skip": false,
           "steps": [
             {
@@ -24,12 +24,14 @@
               "check": [
                 {
                   "id": "js", 
+                  "description": "First title equals post 1",
                   "properties": {
                     "js": "http.data[0].title == 'Post 1'"
                   }
                 },
                 {
                   "id": "js", 
+                  "description": "Status success, this will fail. Property statusCode should be used",
                   "properties": {
                     "js": "http.status == 200"
                   }

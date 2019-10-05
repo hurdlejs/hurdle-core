@@ -112,6 +112,10 @@ export class TestAssertion {
    */
   id!: string;  
   /**
+   * Description of the assertion
+   */
+  public description: string | undefined;
+  /**
    * Assertion properties
    */
   properties: any;

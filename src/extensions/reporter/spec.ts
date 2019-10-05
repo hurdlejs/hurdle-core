@@ -7,38 +7,44 @@ import { HurdleReporter } from '../../reporter/reporter';
  */
 export class SpecReporter implements HurdleReporter {
   static id = 'spec';
+  private testsFailed = 0;
+  private testsPassed = 0;
+  private caseIndent = '  ';
+  private testIndent = '    ';
 
   projectStart(runnerTime: RunnerTime): void {
-    throw new Error("Method not implemented.");
+    console.log(`Started project ${runnerTime.startTime.toLocaleString()}`);
   }
   sectionStart(testSection: TestSection, runnerTime: RunnerTime): void {
-    throw new Error("Method not implemented.");
+    console.log(`${testSection.name} - ${testSection.description}`);
   }
   caseStart(testCase: TestCase, runnerTime: RunnerTime): void {
-    throw new Error("Method not implemented.");
+    console.log(`${this.caseIndent}${testCase.name}`);
   }
   testStart(testStep: TestStep, runnerTime: RunnerTime): void {
-    throw new Error("Method not implemented.");
+    return;
   }
   testPass(testStep: TestStep, check: TestAssertion): void {
-    throw new Error("Method not implemented.");
+    this.testsPassed++;
+    console.log(`${this.testIndent}✓ ${check.description}`);
   }
   testFail(testStep: TestStep, check: TestAssertion): void {
-    throw new Error("Method not implemented.");
+    this.testsFailed++;
+    console.log(`${this.testIndent}✖ ${check.description}`);
   }
   testSkip(testStep: TestStep, check: TestAssertion): void {
-    throw new Error("Method not implemented.");
+    console.log(`${this.testIndent}- ${check.description}`);
   }
   testEnd(testStep: TestStep, runnerTime: RunnerTime): void {
-    throw new Error("Method not implemented.");
+    return
   }
   caseEnd(testCase: TestCase, runnerTime: RunnerTime): void {
-    throw new Error("Method not implemented.");
+    return;
   }
   sectionEnd(testSection: TestSection, runnerTime: RunnerTime): void {
-    throw new Error("Method not implemented.");
+    return;
   }
   projectEnd(runnerTime: RunnerTime): void {
-    throw new Error("Method not implemented.");
+    console.log(`Ended project ${runnerTime.endTime ? runnerTime.endTime.toLocaleString() : ''} (${runnerTime.duration ? runnerTime.duration/1000 : 0}s)`);
   }
 }
