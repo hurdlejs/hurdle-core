@@ -43,7 +43,7 @@
                 "id": "variable",
                 "properties": {
                   "name": "postId",
-                  "value": "http.data[1].title"
+                  "value": "http.data[1].id"
                 }
               }
             }
@@ -59,7 +59,7 @@
                 "id": "http",
                 "properties": {
                   "method": "GET",
-                  "url": "https://my-json-server.typicode.com/typicode/demo/posts"
+                  "url": "https://my-json-server.typicode.com/typicode/demo/posts/${postId}"
                 }
               },
               "check": [
@@ -67,7 +67,7 @@
                   "id": "js", 
                   "description": "Second title equals post 2",
                   "properties": {
-                    "js": "http.data[1].title == 'Post 2'"
+                    "js": "http.data[0].title == 'Post 2'"
                   }
                 }
               ]
