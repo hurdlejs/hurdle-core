@@ -48,6 +48,31 @@
               }
             }
           ]
+        },
+        {
+          "id": "TS1-TC2",
+          "name": "Check posts 2",
+          "skip": false,
+          "steps": [
+            {
+              "action": {
+                "id": "http",
+                "properties": {
+                  "method": "GET",
+                  "url": "https://my-json-server.typicode.com/typicode/demo/posts"
+                }
+              },
+              "check": [
+                {
+                  "id": "js", 
+                  "description": "Second title equals post 2",
+                  "properties": {
+                    "js": "http.data[1].title == 'Post 2'"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

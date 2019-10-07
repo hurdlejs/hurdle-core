@@ -12,6 +12,9 @@ var Hello = (function () {
     return Hello;
 }());
 exports.default = Hello;
+function error(error) {
+    console.error(error);
+}
 var runner = new index_1.Runner();
-runner.start();
+runner.start().catch(error);
 //# sourceMappingURL=index.js.map

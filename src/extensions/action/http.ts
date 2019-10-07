@@ -3,7 +3,7 @@ import { HurdleAction } from '../../action/action';
 import { RunnerState } from '../../runner/state';
 
 
-export class HtppActionHurdleProject implements HurdleAction {
+export class HttpAction implements HurdleAction {
   static id = 'http';
   properties: any = {
     url: ''

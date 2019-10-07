@@ -7,7 +7,7 @@ import { RunnerState } from '../../runner/state';
 /**
  * Csv Action to convert a csv file to an array of objects
  */
-export class CsvActionHurdleProject implements HurdleAction {
+export class CsvAction implements HurdleAction {
   static id = 'csv';
   properties: any = {
     fileLocation: ''
