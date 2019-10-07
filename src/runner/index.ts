@@ -97,8 +97,10 @@ export class Runner {
       const response = await Promise.resolve(action.execute(runnerState));
       /* eslint require-atomic-updates: 0 */
       runnerState[testStep.action.id] = response;
-      for (const testCheck of testStep.check) {
-        await this.runTestCheck(testStep, testCheck, runnerState, reporters);
+      if (testStep.check) {
+        for (const testCheck of testStep.check) {
+          await this.runTestCheck(testStep, testCheck, runnerState, reporters);
+        }
       }
     } else {
       console.log(`Test step action ${testStep.action.id} not found`);
