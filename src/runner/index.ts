@@ -5,6 +5,7 @@ import { HurdleAction } from '../action/action';
 import { RunnerState, RunnerTime } from './state';
 import { HurdleAssertion } from '../assertion/assertion';
 import { HurdleReporter } from '../reporter/reporter';
+import { ReporterRunner } from './reporter-runner';
 
 export class Runner {
 
@@ -31,6 +32,7 @@ export class Runner {
         console.log(`Reporter ${reporter} not found`);
       }
     }
+    const reporterRunner = new ReporterRunner(reporters);
 
     // Project loader should be provided by cli or UI, hardcoded for testing
     const extension = extensions.getExtension('json', ExtensionType.Project);
@@ -42,7 +44,8 @@ export class Runner {
         console.log('Unable to load project');
         return;
       } else {
-        await this.runProject(projectConfiguration, reporters);
+        await this.runProject(projectConfiguration, reporterRunner);
+        reporterRunner.endRunner();
       }
     } else {
       console.log('Project load extension not found');
@@ -50,46 +53,46 @@ export class Runner {
     }
   }
 
-  public async runProject(projectConfiguration: ProjectConfiguration, reporters: Array<HurdleReporter>): Promise<void> {
+  public async runProject(projectConfiguration: ProjectConfiguration, reporterRunner: ReporterRunner): Promise<void> {
     const runnerState = new RunnerState();
     const runnerTime = new RunnerTime();
     
-    reporters.forEach(reporter => reporter.projectStart(runnerTime));
+    reporterRunner.queueProjectStart(runnerTime);
     for (const testSection of projectConfiguration.sections) {
-      await this.runTestSection(testSection, runnerState, reporters);
+      await this.runTestSection(testSection, runnerState, reporterRunner);
     }
     runnerTime.end();
-    reporters.forEach(reporter => reporter.projectEnd(runnerTime));
+    reporterRunner.queueProjectEnd(runnerTime);
   }
   
-  public async runTestSection(testSection: TestSection, runnerState: RunnerState, reporters: Array<HurdleReporter>): Promise<void> {
+  public async runTestSection(testSection: TestSection, runnerState: RunnerState, reporterRunner: ReporterRunner): Promise<void> {
     const runnerTime = new RunnerTime();
     
-    reporters.forEach(reporter => reporter.sectionStart(testSection, runnerTime));
+    reporterRunner.queueSectionStart(testSection, runnerTime);
     for (const testCase of testSection.cases) {
-      await this.runTestCase(testCase, runnerState, reporters);
+      await this.runTestCase(testCase, runnerState, reporterRunner);
     }
     runnerTime.end();
-    reporters.forEach(reporter => reporter.sectionEnd(testSection, runnerTime));
+    reporterRunner.queueSectionEnd(testSection, runnerTime);
   }
 
-  public async runTestCase(testCase: TestCase, runnerState: RunnerState, reporters: Array<HurdleReporter>): Promise<void> {
+  public async runTestCase(testCase: TestCase, runnerState: RunnerState, reporterRunner: ReporterRunner): Promise<void> {
     const runnerTime = new RunnerTime();
     
-    reporters.forEach(reporter => reporter.caseStart(testCase, runnerTime));
+    reporterRunner.queueCaseStart(testCase, runnerTime);
     for (const testStep of testCase.steps) {
-      await this.runTestStep(testStep, runnerState, reporters);
+      await this.runTestStep(testStep, runnerState, reporterRunner);
     }
     runnerTime.end();
-    reporters.forEach(reporter => reporter.caseEnd(testCase, runnerTime));
+    reporterRunner.queueCaseEnd(testCase, runnerTime);
   }
     
-  public async runTestStep(testStep: TestStep, runnerState: any, reporters: Array<HurdleReporter>): Promise<void> {
+  public async runTestStep(testStep: TestStep, runnerState: any, reporterRunner: ReporterRunner): Promise<void> {
     const extensions = await Extension.getInstance();
     const extension = extensions.getExtension(testStep.action.id, ExtensionType.Action);
     const runnerTime = new RunnerTime();
     
-    reporters.forEach(reporter => reporter.testStart(testStep, runnerTime));
+    reporterRunner.queueTestStart(testStep, runnerTime);
     if (extension) {
       const action =  new extension.instanceType() as HurdleAction;
       action.properties = testStep.action.properties;
@@ -99,7 +102,7 @@ export class Runner {
       runnerState[testStep.action.id] = response;
       if (testStep.check) {
         for (const testCheck of testStep.check) {
-          await this.runTestCheck(testStep, testCheck, runnerState, reporters);
+          await this.runTestCheck(testStep, testCheck, runnerState, reporterRunner);
         }
       }
     } else {
@@ -107,10 +110,10 @@ export class Runner {
     }
 
     runnerTime.end();
-    reporters.forEach(reporter => reporter.testEnd(testStep, runnerTime));
+    reporterRunner.queueTestEnd(testStep, runnerTime);
   }
 
-  public async runTestCheck(testStep: TestStep, testCheck: TestAssertion, runnerState: RunnerState, reporters: Array<HurdleReporter>): Promise<void> {
+  public async runTestCheck(testStep: TestStep, testCheck: TestAssertion, runnerState: RunnerState, reporterRunner: ReporterRunner): Promise<void> {
     const extensions = await Extension.getInstance();
     const extension = extensions.getExtension(testCheck.id, ExtensionType.Assertion);
     if (extension !== undefined) {
@@ -119,9 +122,9 @@ export class Runner {
       const result = await assertion.assert(runnerState);
 
       if (result.success === true) {
-        reporters.forEach(reporter => reporter.testPass(testStep, testCheck));
+        reporterRunner.queueTestPass(testStep, testCheck);
       } else {
-        reporters.forEach(reporter => reporter.testFail(testStep, testCheck));
+        reporterRunner.queueTestFail(testStep, testCheck);
       }
     } else {
       console.log(`Test check ${testCheck.id} not found`);
