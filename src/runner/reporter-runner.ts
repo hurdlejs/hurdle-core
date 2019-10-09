@@ -22,17 +22,17 @@ enum ReportAction {
 }
 
 export class ReporterRunner {
-  queue: QueueReportAction[] = [];
-  reporters: HurdleReporter[] = [];
-  processing = false;
-  interval: NodeJS.Timer;
+  private queue: QueueReportAction[] = [];
+  private reporters: HurdleReporter[] = [];
+  private processing = false;
+  private interval: NodeJS.Timer;
 
   constructor(reporters: HurdleReporter[]) {
     this.reporters = reporters;
     this.interval = setInterval(() => { this.execute() }, 1000);
   }
 
-  execute() {
+  private execute() {
     if (!this.processing && this.queue.length > 0) {
       const obj = this.queue.shift();
       if (obj) {
@@ -79,7 +79,10 @@ export class ReporterRunner {
             break;
         }
 
-        Promise.all(promises).then((results) => this.processing = false);
+        Promise.all(promises).then((results) => { 
+          this.processing = false;
+          this.execute();
+        });
       }
     }
   }
