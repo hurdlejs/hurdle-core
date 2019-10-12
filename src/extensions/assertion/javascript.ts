@@ -6,7 +6,7 @@ import { HurdleAssertion, HurdleAssertionResult } from '../../assertion/assertio
  * JavaScript assertion. Runs code within V8 virtual machine context and returns a boolean
  */
 export class JavaScriptAssertion implements HurdleAssertion {
-  static id = 'js';
+  id = 'js';
   properties: any = {
     js: ''
   };

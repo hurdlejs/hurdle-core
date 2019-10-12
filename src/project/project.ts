@@ -4,20 +4,20 @@ import { HurdleAction } from '../action/action';
 /**
  * Defines a project type interface
  */
-export abstract class HurdleProject {
+export interface HurdleProject {
   /**
    * Unique identifier of the project type
    */
-  static id: string;
+  id: string;
   /**
    * Load a project source and transform into a project configuration object
    */
-  abstract load: (source: string | object) => ProjectConfiguration;
+  load: (source: string | object) => ProjectConfiguration;
 
   /**
    * Save a project configuration object to destination
    */
-  abstract save: (destination: string | object, projectConfiguration: ProjectConfiguration) => boolean;
+  save: (destination: string | object, projectConfiguration: ProjectConfiguration) => boolean;
 }
 
 

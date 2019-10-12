@@ -4,7 +4,7 @@ import { RunnerState } from '../../runner/state';
 
 
 export class HttpAction implements HurdleAction {
-  static id = 'http';
+  id = 'http';
   properties: any = {
     url: ''
   };

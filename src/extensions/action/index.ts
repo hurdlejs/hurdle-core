@@ -4,8 +4,8 @@ import { VariableAction } from './variable';
 
 export default class DefaulHurdleActions implements HurdleExtension {
   action = [
-    HttpAction,
-    VariableAction
+    new HttpAction(),
+    new VariableAction()
   ];
   
 }

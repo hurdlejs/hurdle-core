@@ -6,7 +6,7 @@ import { HurdleReporter } from '../../reporter/reporter';
  * Spec reporter 
  */
 export class SpecReporter implements HurdleReporter {
-  static id = 'spec';
+  id = 'spec';
   private testsFailed = 0;
   private testsPassed = 0;
   private caseIndent = '  ';

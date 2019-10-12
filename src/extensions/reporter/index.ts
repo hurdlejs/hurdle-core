@@ -4,6 +4,6 @@ import { SpecReporter } from './spec';
 
 export default class DefaulHurdleReporters implements HurdleExtension {
   reporter = [
-    SpecReporter
+    new SpecReporter()
   ];
 }

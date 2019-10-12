@@ -42,8 +42,8 @@
               "action": {
                 "id": "variable",
                 "properties": {
-                  "name": "postId",
-                  "value": "http.data[1].id"
+                  "name": "postId1",
+                  "value": "http.data[0].id"
                 }
               }
             }
@@ -56,10 +56,19 @@
           "steps": [
             {
               "action": {
+                "id": "variable",
+                "properties": {
+                  "name": "postId2",
+                  "value": "{{postId1}}+1"
+                }
+              }
+            },
+            {
+              "action": {
                 "id": "http",
                 "properties": {
                   "method": "GET",
-                  "url": "https://my-json-server.typicode.com/typicode/demo/posts/${postId}"
+                  "url": "https://my-json-server.typicode.com/typicode/demo/posts/{{postId2}}"
                 }
               },
               "check": [

@@ -4,6 +4,6 @@ import { JavaScriptAssertion } from './javascript';
 
 export default class DefaulHurdleAssertions implements HurdleExtension {
   assertion = [
-    JavaScriptAssertion
+    new JavaScriptAssertion()
   ];
 }

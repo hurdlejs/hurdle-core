@@ -1,19 +1,30 @@
 import { RunnerState } from '../runner/state';
+import { TestStep } from '../project/project';
 /**
  * Defines a test case action interface
  */
-export abstract class HurdleAction {
+export interface HurdleAction {
   /**
    * Unique identifier of the action
    */
-  static id: string;
+  id: string;
   /**
    * Action properties
    */
   properties: any;
+  /**
+   * Execute action
+   */
+  execute: (state: RunnerState) => object;
+  /**
+   * Executed before each action
+   */
+  beforeEachAction?: (testStep: TestStep, state: RunnerState) => void;
+  /**
+   * Executed after each action
+   */
+  afterEachAction?: (testStep: TestStep, state: RunnerState) => void;
   
-  abstract execute: (state: RunnerState) => object;
-
   /**
    * Not sure if methods below are required
    */

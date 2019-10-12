@@ -13,19 +13,19 @@ export interface HurdleExtension {
   /**
    * Test case action class export 
    */
-  action?: Array<typeof HurdleAction>;
+  action?: HurdleAction[];
   /**
    * Project class export 
    */
-  project?: Array<typeof HurdleProject>;
+  project?: HurdleProject[];
   /**
    * Reporter class export
    */
-  reporter?: Array<typeof HurdleReporter>;
+  reporter?: HurdleReporter[];
     /**
    * Assertion class export
    */
-  assertion?: Array<typeof HurdleAssertion>;
+  assertion?: HurdleAssertion[];
 }
 
 /**
@@ -51,7 +51,7 @@ export enum ExtensionType {
 }
 
 export class RegisteredExtension {
-  public constructor(public id: string, public instanceType: typeof HurdleAction | typeof HurdleProject | typeof HurdleReporter | typeof HurdleAssertion, public type: ExtensionType, public packageJson: object) {
+  public constructor(public id: string, public instance: HurdleAction | HurdleProject | HurdleReporter | HurdleAssertion, public type: ExtensionType, public packageJson: object) {
 
   }
 }
@@ -158,17 +158,17 @@ export class Extension {
    /**
    * Register extension in cached list
    * @param name ID of the extension, should match npm package name or local directory name
-   * @param instanceType Class type of extension package
+   * @param instance Class type of extension package
    * @param type Type of extension
    * @param packageJson Package.json object
    */
-  public registerExtension(id: string, instanceType: typeof HurdleAction | typeof HurdleProject | typeof HurdleReporter | typeof HurdleAssertion, type: ExtensionType, packageJson: object): void {
+  public registerExtension(id: string, instance: HurdleAction | HurdleProject | HurdleReporter | HurdleAssertion, type: ExtensionType, packageJson: object): void {
     if (this.extensions.some(extension => extension.id === id)) {
       // Duplicate extension name 
       // TODO Return error message
       return;
     } else {
-      this.extensions.push(new RegisteredExtension(id, instanceType, type, packageJson));
+      this.extensions.push(new RegisteredExtension(id, instance, type, packageJson));
     }
   }
 

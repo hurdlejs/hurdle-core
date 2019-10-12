@@ -27,7 +27,7 @@ export class Runner {
     for (const reporter of configReporters) {
       const reporterExtension = extensions.getExtension(reporter, ExtensionType.Reporter)
       if (reporterExtension) {
-        reporters.push(new reporterExtension.instanceType() as HurdleReporter);
+        reporters.push(reporterExtension.instance as HurdleReporter);
       } else {
         console.log(`Reporter ${reporter} not found`);
       }
@@ -37,7 +37,7 @@ export class Runner {
     // Project loader should be provided by cli or UI, hardcoded for testing
     const extension = extensions.getExtension('json', ExtensionType.Project);
     if (extension !== undefined) {
-      const projectLoader =  new extension.instanceType() as HurdleProject;
+      const projectLoader =  extension.instance as HurdleProject;
       // Project path/file should be provided by cli or UI, hardcoded for testing
       const projectConfiguration = projectLoader.load('test/project/project.json');
       if (!projectConfiguration) {
@@ -94,7 +94,13 @@ export class Runner {
     
     reporterRunner.queueTestStart(testStep, runnerTime);
     if (extension) {
-      const action =  new extension.instanceType() as HurdleAction;
+      const variableExtension = extensions.getExtension('variable', ExtensionType.Action);
+      if (variableExtension) {
+        const variableAction = variableExtension.instance as HurdleAction;
+        if (variableAction.beforeEachAction) variableAction.beforeEachAction(testStep, runnerState);
+      }
+      
+      const action =  extension.instance as HurdleAction;
       action.properties = testStep.action.properties;
       // Wait for sync actions
       const response = await Promise.resolve(action.execute(runnerState));
@@ -117,7 +123,7 @@ export class Runner {
     const extensions = await Extension.getInstance();
     const extension = extensions.getExtension(testCheck.id, ExtensionType.Assertion);
     if (extension !== undefined) {
-      const assertion =  new extension.instanceType() as HurdleAssertion;
+      const assertion =  extension.instance as HurdleAssertion;
       assertion.properties = testCheck.properties;
       const result = await assertion.assert(runnerState);
 

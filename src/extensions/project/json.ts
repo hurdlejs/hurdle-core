@@ -3,7 +3,7 @@ import * as fs from 'graceful-fs';
 import { HurdleProject, ProjectConfiguration } from '../../project/project';
 
 export class JsonHurdleProject implements HurdleProject {
-  static id = 'json';
+  id = 'json';
   /**
    * Load a project source and transform into a project configuration object
    */

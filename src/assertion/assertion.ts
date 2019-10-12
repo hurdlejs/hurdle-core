@@ -3,11 +3,11 @@ import { RunnerState } from '../runner/state';
 /**
  * Defines a assertion type interface
  */
-export abstract class HurdleAssertion {
+export interface HurdleAssertion {
   /**
    * Unique identifier of the assertion type
    */
-  static id: string;
+  id: string;
   /**
    * Assertion properties
    */
@@ -15,7 +15,7 @@ export abstract class HurdleAssertion {
   /**
    * Run assertion on input parameters
    */
-  abstract assert: (state: RunnerState) => Promise<HurdleAssertionResult>;
+  assert: (state: RunnerState) => Promise<HurdleAssertionResult>;
 }
 
 
