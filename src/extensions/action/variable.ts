@@ -15,7 +15,11 @@ export class VariableAction implements HurdleAction {
   };
 
   async execute(state: RunnerState): Promise<object> {
-    return await vm.runInNewContext(`${this.properties.name}=${this.properties.value}`, state);
+    try {
+      return await vm.runInNewContext(`${this.properties.name}=${this.properties.value}`, state);
+    } catch (error) {
+      return error;
+    }
   }
 
   beforeEachAction(testStep: TestStep, state: RunnerState): void {
