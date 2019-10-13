@@ -94,10 +94,12 @@ export class Runner {
     
     reporterRunner.queueTestStart(testStep, runnerTime);
     if (extension) {
-      const variableExtension = extensions.getExtension('variable', ExtensionType.Action);
-      if (variableExtension) {
-        const variableAction = variableExtension.instance as HurdleAction;
-        if (variableAction.beforeEachAction) variableAction.beforeEachAction(testStep, runnerState);
+      const actionExtensions = extensions.getExtensions(ExtensionType.Action);
+      if (actionExtensions) {
+        for (const actionExtension of actionExtensions) {
+          const actionBeforeEach = actionExtension.instance as HurdleAction;
+          if (actionBeforeEach.beforeEachAction) actionBeforeEach.beforeEachAction(testStep, runnerState);
+        }
       }
       
       const action =  extension.instance as HurdleAction;
@@ -106,6 +108,14 @@ export class Runner {
       const response = await Promise.resolve(action.execute(runnerState));
       /* eslint require-atomic-updates: 0 */
       runnerState[testStep.action.id] = response;
+
+      if (actionExtensions) {
+        for (const actionExtension of actionExtensions) {
+          const actionAfterEach = actionExtension.instance as HurdleAction;
+          if (actionAfterEach.afterEachAction) actionAfterEach.afterEachAction(testStep, runnerState);
+        }
+      }
+
       if (testStep.check) {
         for (const testCheck of testStep.check) {
           await this.runTestCheck(testStep, testCheck, runnerState, reporterRunner);

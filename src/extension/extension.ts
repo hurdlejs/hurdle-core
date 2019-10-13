@@ -79,6 +79,14 @@ export class Extension {
     return this.extensions.find(extension => extension.id === id && extension.type === type);
   }
 
+    /**
+   * Get an extension by Type. Returns undefined if not found.
+   * @param type Extension Type
+   */
+  public getExtensions(type: ExtensionType): RegisteredExtension[] | undefined {
+    return this.extensions.filter(extension => extension.type === type);
+  }
+
   /**
    * Load all extensions found in extension paths
    */

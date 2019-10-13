@@ -15,7 +15,7 @@ export class VariableAction implements HurdleAction {
   };
 
   async execute(state: RunnerState): Promise<object> {
-    return await vm.runInNewContext(`${this.properties.name}=${this.properties.value}`, state)
+    return await vm.runInNewContext(`${this.properties.name}=${this.properties.value}`, state);
   }
 
   beforeEachAction(testStep: TestStep, state: RunnerState): void {
@@ -31,14 +31,17 @@ export class VariableAction implements HurdleAction {
       }
     } else if (isObject(value)) {
       for (const property in value) {
-        this.replacePropertyVariable(value[property], state);
+        const returnValue = this.replacePropertyVariable(value[property], state);
+        if (returnValue !== undefined) {
+          value[property] = returnValue;
+        }
       }
     } else if (isString(value)) {
       const variableMatch = value.match(/({{)\w+(}})/g);
       if (variableMatch) {
         for (const match of variableMatch) {
           const variableName = match.replace('{{', '').replace('}}', '');
-          value = value.replace(match, state[variableName]);
+          return value = value.replace(match, state[variableName]);
         }
       }
     }

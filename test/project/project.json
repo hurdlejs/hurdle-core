@@ -76,7 +76,7 @@
                   "id": "js", 
                   "description": "Second title equals post 2",
                   "properties": {
-                    "js": "http.data[0].title == 'Post 2'"
+                    "js": "http.data.title == 'Post 2'"
                   }
                 }
               ]
